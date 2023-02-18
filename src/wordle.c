@@ -4,7 +4,10 @@
 #include <ctype.h>
 #include <time.h>
 
-#define WORDS_COUNT 1604;
+#define WORDS_COUNT 1604
+#define ARRAY_SIZE  6
+#define WORD_LENGTH 5
+#define BLANK_SPACE ' '
 
 char * genRandomWord(char * word){
 
@@ -18,12 +21,14 @@ char * genRandomWord(char * word){
     if (NULL == fp) 
         printf("File can't be opened\n");
 
-    for(int i = 0; i < random; i++) 
+    for(int i = 0; i <= random; i++) 
         fgets(aux, 7, fp);
 
     aux[strcspn(aux, "\n")] = 0;
     aux[0] = tolower(aux[0]);
     strcpy(word, aux);
+
+    fclose(fp);
 
     return word;
 
@@ -36,10 +41,18 @@ int containsChar(char letter, char *word) {
     return 0;
 }
 
+void fillWithSpace(int row, int column, char arr[row][column]){
+    for(int i = 0; i < ARRAY_SIZE; i++) {
+        for(int j = 0; j < WORD_LENGTH; j++) {
+            arr[i][j] = BLANK_SPACE;
+        }   
+    }
+}
+
 int main() {
 
     srand(time(NULL));
-    char wordBank[4][6] = {"pause", "equal", "sauce", "mouse"};
+    //char wordBank[4][6] = {"pause", "equal", "sauce", "mouse"};
     char word[6]; 
     int alert = 0;
     
@@ -49,17 +62,12 @@ int main() {
     char guesses[6][30];
     char guess[30];
     int try = 0;
-    char space[] = " ";
-    
-    //Populate the array with blank spaces
-    for(int i = 0; i < 6; i++) {
-        for(int j = 0; j < 5; j++) {
-            guesses[i][j] = *space;
-        }   
-    }
+
+    fillWithSpace(6, 30, guesses);
 
     while (try <= 6) { 
         system("cls||clear");
+        printf("%s\n", word);
         printf("       Wordle\n");
         for(int i = 0; i < 6; i++ ) {
             for(int j = 0; j < 5; j++) {
@@ -77,14 +85,15 @@ int main() {
 
             }
             printf("\n");
-        }   
+        }  
+
         if(strcmp(guess, word) == 0) {
             printf("\n       You Win!\n\n");
             exit(0);
         }
+
         if(try == 6 && strcmp(guess, word) != 0) {
             printf("\n      You Lose!\n\n");
-
             exit(0);
         }
 
@@ -98,7 +107,7 @@ int main() {
         scanf("%s", guesses[try]);
         if(strlen(guesses[try]) != 5){
             for(int j = 0; j < 5; j++) 
-                guesses[try][j] = *space;
+                guesses[try][j] = BLANK_SPACE;
             alert = 1;
             continue;
         }
