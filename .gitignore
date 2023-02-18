@@ -1,3 +1,6 @@
 wordle
-vscode/
+.vscode/
 output/
+sandbox
+sandbox.c
+test
