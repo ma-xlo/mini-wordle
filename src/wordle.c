@@ -52,13 +52,11 @@ void fillWithSpace(int row, int column, char arr[row][column]){
 int main() {
 
     srand(time(NULL));
-    char wordBank[5][6] = {"ultra", "pause", "equal", "sauce", "mouse"};
     char word[6]; 
     int alert = 0;
     
     printf("       Wordle\n");
     strcpy(word, genRandomWord(word));
-    strcpy(word, wordBank[rand() % 5]);
     
     char guesses[6][30];
     char guess[30];
@@ -68,8 +66,8 @@ int main() {
 
     while (try <= 6) { 
         system("clear");
-        printf("%s\n\n\n", word);
-        printf("       Wordle\n");
+        // printf("%s\n\n\n", word);
+        printf("\n       Wordle\n");
         for(int i = 0; i < 6; i++ ) {
             for(int j = 0; j < 5; j++) {
                 printf(" ");
